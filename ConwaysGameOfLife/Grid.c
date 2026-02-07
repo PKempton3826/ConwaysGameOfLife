@@ -120,7 +120,7 @@ void iterateGrid(int* gridIn, int* gridOut)
     int* TN = inCell - GRID_WIDTH;
     int* TLN = TN - 1;
     int* TRN = TN + 1;
-    int* innerRowEnd = inCell + GRID_WIDTH * (GRID_HEIGHT - 2); // subtract 2 to account for first and last rows
+    int* innerRowEnd = inCell + GRID_WIDTH * (GRID_HEIGHT - 2);
     for (; inCell < innerRowEnd; ++inCell, ++outCell, ++TN, ++TLN, ++LN, ++BLN, ++BN, ++BRN, ++RN, ++TRN)
     {
         // inner rows, first cell
