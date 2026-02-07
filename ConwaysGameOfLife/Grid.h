@@ -1,5 +1,5 @@
 // File:            Grid.h
-// Project:         Conways Game of Life
+// Project:         Conway's Game of Life
 // Programmer:      Philip Kempton
 // First Version:   2026-02-07
 // Description:     Contains Grid prototypes and constants for the ConwaysGameOfLife application.

@@ -1,8 +1,8 @@
 // File:            Grid.c
-// Project:         Conways Game of Life
+// Project:         Conway's Game of Life
 // Programmer:      Philip Kempton
 // First Version:   2026-02-07
-// Description:     Contains Grid function for the ConwaysGameOfLife application.
+// Description:     Contains Grid functions for the ConwaysGameOfLife application.
 
 #include "Grid.h"
 

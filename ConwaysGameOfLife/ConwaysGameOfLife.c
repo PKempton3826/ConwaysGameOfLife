@@ -1,5 +1,5 @@
 // File:            ConwaysGameOfLife.c
-// Project:         Conways Game of Life
+// Project:         Conway's Game of Life
 // Programmer:      Philip Kempton
 // First Version:   2021-05-01
 // Description:     This is a solution for Conway's Game of Life (https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
