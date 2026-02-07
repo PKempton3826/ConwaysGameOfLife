@@ -20,18 +20,17 @@ void displayGrid(int* grid)
     {
         for (int col = 0; col < GRID_WIDTH; ++col)
         {
-            if (grid[(row * GRID_WIDTH) + col] == 1)
+            switch (grid[(row * GRID_WIDTH) + col])
             {
+            case 1:
                 printf(formattedCellStr, '0');
-            }
-            else if (grid[(row * GRID_WIDTH) + col] == 0)
-            {
+                break;
+            case 0:
                 printf(formattedCellStr, '-');
-            }
-            else
-            {
-                // display 'x' to signify invalid cell data
+                break;
+            default:
                 printf(formattedCellStr, 'x');
+                break;
             }
         }
         printf("\n");
@@ -77,19 +76,18 @@ void iterateGrid(int* gridIn, int* gridOut)
     // lookup array for efficiency
     int resultArray[] = {
         0, 0, 0, 1, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, // no-man's-land, unused indeces
+        0, 0, 0, 0, 0, 0, 0, // no-man's-land, unused indices
         0, 0, 1, 1, 0, 0, 0, 0, 0
     };
-
-    int* BN = inCell + GRID_WIDTH;
-    int* RN = inCell + 1;
-    int* BRN = inCell + GRID_WIDTH + 1;
 
     // first row, first cell
     //      [ x o o o ]
     //      [ o o o o ]
     //      [ o o o o ]
     //      [ o o o o ]
+    int* BN = inCell + GRID_WIDTH;
+    int* RN = inCell + 1;
+    int* BRN = inCell + GRID_WIDTH + 1;
     *outCell = resultArray[(*BN + *BRN + *RN) | (*inCell << 4)];
 
     // first row, inner cells
