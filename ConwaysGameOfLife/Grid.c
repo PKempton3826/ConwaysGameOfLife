@@ -2,13 +2,14 @@
 // Project:         Conways Game of Life
 // Programmer:      Philip Kempton
 // First Version:   2026-02-07
-// Description:     Contains Grid function for ConwaysGameOfLife.
+// Description:     Contains Grid function for the ConwaysGameOfLife application.
 
 #include "Grid.h"
 
+
 // Function:    displayGrid
 // Description: Displays a grid of ones and zeros as '0's and '-'s, respectively.
-//              Displays 'x' for invalid cell data (bad input).
+//              Displays 'x' for invalid cell data.
 // Parameters: 
 //      grid:   The grid to display
 // Returns:     N/A
@@ -30,8 +31,7 @@ void displayGrid(int* grid)
             }
             else
             {
-                // bad input, display 'x' to signify an invalid cell
-                // this should not happen
+                // display 'x' to signify invalid cell data
                 printf(formattedCellStr, 'x');
             }
         }
@@ -65,6 +65,7 @@ void populateGrid(int* grid)
 
 // Function:        iterateGrid
 // Description:     Iterates the grid.
+//                  Utilizes lookup arrys, pointer arithmetic, bit shifting, and bitwise ORs for efficiency.
 // Parameters:
 //      gridIn:     Pointer to the input grid for calculating the next iteration
 //      gridOut:    Pointer to the output grid for returning the newly calculated iteration
@@ -85,11 +86,18 @@ void iterateGrid(int** gridIn, int** gridOut)
     int* RN = inCell + 1;
     int* BRN = inCell + GRID_WIDTH + 1;
 
-    // first row
-    // first char
+    // first row, first cell
+    //      [ x o o o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
     *outCell = resultArray[(*BN + *BRN + *RN) | (*inCell << 4)];
 
-    // middle cols
+    // first row, inner cells
+    //      [ o x x o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
     int* end = inCell + GRID_WIDTH - 1;
     inCell++; outCell++; BN++; BRN++; RN++;
     int* LN = inCell - 1;
@@ -99,10 +107,18 @@ void iterateGrid(int** gridIn, int** gridOut)
         *outCell = resultArray[(*LN + *BLN + *BN + *BRN + *RN) | (*inCell << 4)];
     }
 
-    // last char
+    // first row, last cell
+    //      [ o o o x ]
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
     *outCell = resultArray[(*LN + *BLN + *BN) | (*inCell << 4)];
 
-    // centre rows
+    // inner row cells
+    //      [ o o o o ]
+    //      [ x x x x ]
+    //      [ x x x x ]
+    //      [ o o o o ]
     inCell++; outCell++; LN++; BLN++; BN++; BRN++; RN++;
     int* TN = inCell - GRID_WIDTH;
     int* TLN = TN - 1;
@@ -110,10 +126,18 @@ void iterateGrid(int** gridIn, int** gridOut)
     int* innerRowEnd = inCell + GRID_WIDTH * (GRID_HEIGHT - 2); // subtract 2 to account for first and last rows
     for (; inCell < innerRowEnd; ++inCell, ++outCell, ++TN, ++TLN, ++LN, ++BLN, ++BN, ++BRN, ++RN, ++TRN)
     {
-        // first char
+        // inner rows, first cell
+        //      [ o o o o ]
+        //      [ x o o o ]
+        //      [ x o o o ]
+        //      [ o o o o ]
         *outCell = resultArray[(*BN + *BRN + *RN + *TRN + *TN) | (*inCell << 4)];
 
-        // loop through centre chars
+        // inner rows, inner cells
+        //      [ o o o o ]
+        //      [ o x x o ]
+        //      [ o x x o ]
+        //      [ o o o o ]
         end = inCell + GRID_WIDTH - 1;
         inCell++; outCell++; TN++, TLN++, LN++, BLN++, BN++, BRN++, RN++, TRN++;
         for (; inCell < end; ++inCell, ++outCell, ++TN, ++TLN, ++LN, ++BLN, ++BN, ++BRN, ++RN, ++TRN)
@@ -121,15 +145,26 @@ void iterateGrid(int** gridIn, int** gridOut)
             *outCell = resultArray[(*TN + *TLN + *LN + *BLN + *BN + *BRN + *RN + *TRN) | (*inCell << 4)];
         }
 
-        // last chars
+        // inner rows, last cell
+        //      [ o o o o ]
+        //      [ o o o x ]
+        //      [ o o o x ]
+        //      [ o o o o ]
         *outCell = resultArray[(*TN + *TLN + *LN + *BLN + *BN) | (*inCell << 4)];
     }
 
-    // last row
-    // first char
+    // last row, first cell
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ x o o o ]
     *outCell = resultArray[(*TN + *TRN + *RN) | (*inCell << 4)];
 
-    // middle cols
+    // last row, inner cells
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o x x o ]
     end = inCell + GRID_WIDTH - 1;
     inCell++; outCell++; TN++, TLN++, LN++, RN++, TRN++;
     for (; inCell < end; ++inCell, ++outCell, ++TN, ++TLN, ++LN, ++RN, ++TRN)
@@ -137,7 +172,11 @@ void iterateGrid(int** gridIn, int** gridOut)
         *outCell = resultArray[(*LN + *TLN + *TN + *TRN + *RN) | (*inCell << 4)];
     }
 
-    // last char
+    // last row, last cell
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o o o o ]
+    //      [ o o o x ]
     *outCell = resultArray[(*LN + *TLN + *TN) | (*inCell << 4)];
 
     // swap pointers to grids

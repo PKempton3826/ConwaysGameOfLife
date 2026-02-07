@@ -2,21 +2,15 @@
 // Project:         Conways Game of Life
 // Programmer:      Philip Kempton
 // First Version:   2021-05-01
-// Description:     This is a solution for Conways Game of Life (https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+// Description:     This is a solution for Conway's Game of Life (https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 //                  This solution focuses on time efficiency for calculating iterations of the game state.
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include "Grid.h"
 
-// Input constants
-#define ENTER_KEY '\r'
-#define BACKSPACE_KEY '\b'
-#define ESCAPE_KEY '\x1b'
-
 // Prototypes
 void getInput(int* gPtr);
+
 
 // Function:    main
 // Description: Main entry point for application.
@@ -39,12 +33,17 @@ int main()
     // game loop
     while (1)
     {
-        // display current grid and generate next iteration ahead of time
+        // display current grid
         displayGrid(gPtr);
+
+        // generate new iteration ahead of time
         iterateGrid(&gPtr, &bPtr);
 
         // get user input
         getInput(gPtr);
+
+        // clear screen
+        system("cls");
     }
 
     return 0;
@@ -58,30 +57,27 @@ int main()
 void getInput(int* gPtr)
 {
     // display options
-    printf("\nPress ENTER key to tick...");
-    printf("\nPress BACKSPACE key to reset...");
-    printf("\nPress ESC key to exit...");
+    printf("\n1. New Iteration");
+    printf("\n2. Reset Grid");
+    printf("\n3. Exit");
 
-    // get input repeatedly until valid option is selected
+    // get input repeatedly until a valid option is selected
     char input = 0;
-    while (input != ENTER_KEY
-        && input != ESCAPE_KEY
-        && input != BACKSPACE_KEY)
+    while (input != '1'
+        && input != '2'
+        && input != '3')
     {
         input = getch();
     }
 
-    if (input == BACKSPACE_KEY)
+    if (input == '2')
     {
         // reset grid
         populateGrid(gPtr);
     }
-    else if (input == ESCAPE_KEY)
+    else if (input == '3')
     {
         // exit application
         exit(0);
     }
-
-    // clear screen
-    system("cls");
 }

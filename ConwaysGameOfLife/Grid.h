@@ -2,10 +2,13 @@
 // Project:         Conways Game of Life
 // Programmer:      Philip Kempton
 // First Version:   2026-02-07
-// Description:     Contains Grid prototypes and constants for ConwaysGameOfLife.
+// Description:     Contains Grid prototypes and constants for the ConwaysGameOfLife application.
 
 #ifndef _GRID_H_
 #define _GRID_H_
+
+#include <stdio.h>
+#include <stdlib.h>
 
 // Grid dimension constants
 #define GRID_HEIGHT 25
