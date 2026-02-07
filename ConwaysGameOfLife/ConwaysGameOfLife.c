@@ -9,8 +9,7 @@
 #include "Grid.h"
 
 // Prototypes
-void getInput(int* gPtr);
-
+void getInput(int** gridPtr, int** bufferPtr);
 
 // Function:    main
 // Description: Main entry point for application.
@@ -23,24 +22,21 @@ int main()
 
     // define grids and pointers
     int grid[GRID_HEIGHT * GRID_WIDTH] = { 0 };
-    int buff[GRID_HEIGHT * GRID_WIDTH] = { 0 };
-    int *gPtr = grid;
-    int *bPtr = buff;
+    int buffer[GRID_HEIGHT * GRID_WIDTH] = { 0 };
+    int* gridPtr = grid;
+    int* bufferPtr = buffer;
 
     // populate grid
-    populateGrid(gPtr);
+    populateGrid(gridPtr);
 
     // game loop
     while (1)
     {
         // display current grid
-        displayGrid(gPtr);
-
-        // generate new iteration ahead of time
-        iterateGrid(&gPtr, &bPtr);
+        displayGrid(gridPtr);
 
         // get user input
-        getInput(gPtr);
+        getInput(&gridPtr, &bufferPtr);
 
         // clear screen
         system("cls");
@@ -49,12 +45,13 @@ int main()
     return 0;
 }
 
-// Function:    getInput
-// Description: Gets and acts upon user input.
+// Function:        getInput
+// Description:     Gets and acts upon user input.
 // Parameters:
-//      gPtr:   Pointer grid
-// Returns:     N/A
-void getInput(int* gPtr)
+//      gridPtr:    Pointer to grid
+//      bufferPtr:  Pointer to grid buffer
+// Returns:         N/A
+void getInput(int** gridPtr, int** bufferPtr)
 {
     // display options
     printf("\n1. New Iteration");
@@ -63,21 +60,24 @@ void getInput(int* gPtr)
 
     // get input repeatedly until a valid option is selected
     char input = 0;
-    while (input != '1'
-        && input != '2'
-        && input != '3')
+    while (input == 0)
     {
         input = getch();
-    }
-
-    if (input == '2')
-    {
-        // reset grid
-        populateGrid(gPtr);
-    }
-    else if (input == '3')
-    {
-        // exit application
-        exit(0);
+        switch (input)
+        {
+        case '1':   // new iteration
+            iterateGrid(*gridPtr, *bufferPtr);
+            swapPointers(gridPtr, bufferPtr);
+            break;
+        case '2':   // reset grid
+            populateGrid(*gridPtr);
+            break;
+        case '3':   // exit
+            exit(0);
+            break;
+        default:    // invalid input
+            input = 0;
+            break;
+        }
     }
 }

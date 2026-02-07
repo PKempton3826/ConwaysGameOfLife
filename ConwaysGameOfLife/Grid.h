@@ -17,7 +17,7 @@
 // Prototypes
 void displayGrid(int* grid);
 void populateGrid(int* grid);
-void iterateGrid(int** gridIn, int** gridOut);
+void iterateGrid(int* gridIn, int* gridOut);
 void swapPointers(int** left, int** right);
 
 #endif // !_GRID_H_

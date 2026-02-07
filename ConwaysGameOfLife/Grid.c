@@ -6,7 +6,6 @@
 
 #include "Grid.h"
 
-
 // Function:    displayGrid
 // Description: Displays a grid of ones and zeros as '0's and '-'s, respectively.
 //              Displays 'x' for invalid cell data.
@@ -70,10 +69,10 @@ void populateGrid(int* grid)
 //      gridIn:     Pointer to the input grid for calculating the next iteration
 //      gridOut:    Pointer to the output grid for returning the newly calculated iteration
 // Returns:         N/A
-void iterateGrid(int** gridIn, int** gridOut)
+void iterateGrid(int* gridIn, int* gridOut)
 {
-    int* inCell = *gridIn;
-    int* outCell = *gridOut;
+    int* inCell = gridIn;
+    int* outCell = gridOut;
 
     // lookup array for efficiency
     int resultArray[] = {
@@ -178,9 +177,6 @@ void iterateGrid(int** gridIn, int** gridOut)
     //      [ o o o o ]
     //      [ o o o x ]
     *outCell = resultArray[(*LN + *TLN + *TN) | (*inCell << 4)];
-
-    // swap pointers to grids
-    swapPointers(gridIn, gridOut);
 }
 
 // Function:    swapPointers
@@ -191,7 +187,7 @@ void iterateGrid(int** gridIn, int** gridOut)
 // Returns:     N/A
 void swapPointers(int** left, int** right)
 {
-    int* tmp = *left;
-    *left = *right;
-    *right = tmp;
+    *left = (int*)((uintptr_t)*left ^ (uintptr_t)*right);
+    *right = (int*)((uintptr_t)*left ^ (uintptr_t)*right);
+    *left = (int*)((uintptr_t)*left ^ (uintptr_t)*right);
 }
