@@ -76,7 +76,7 @@ void iterateGrid(int* gridIn, int* gridOut)
     // lookup array for efficiency
     int resultArray[] = {
         0, 0, 0, 1, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, // no-man's-land, unused indices
+        0, 0, 0, 0, 0, 0, 0,        // no-man's-land, unused indices
         0, 0, 1, 1, 0, 0, 0, 0, 0
     };
 
